@@ -5,17 +5,21 @@
 
 ## Run Showcase
 
+### inotify demo
+
 simply run docker container:
 
 `docker run --name iknow -it iknow`
 
-strace needs docker seccomp turned off:
+`touch pandora && /tmp/workspace/tlpi/inotify/demo_inotify /tmp/workspace/demo/pandora`
 
-`docker run --security-opt seccomp:unconfined --name iknow -it iknow`
+### fanotify demo
 
-fanotify needs SYS_ADMIN privileged
+fanotify needs SYS_ADMIN privileged:
 
 `docker run --privileged --cap-add SYS_ADMIN --name iknow -it iknow`
+
+`touch pandora && /tmp/workspace/fanotify/fanotify CLOSE "" /tmp/workspace/demo/pandora`
 
 ## Showcase
 
@@ -26,3 +30,8 @@ Run a shell on container:
 Try access the demo file:
 
 `touch pandora`
+
+## Notes
+
+strace needs docker seccomp turned off:
+`docker run --security-opt seccomp:unconfined --name iknow -it iknow`
