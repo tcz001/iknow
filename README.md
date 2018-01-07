@@ -5,7 +5,17 @@
 
 ## Run Showcase
 
+simply run docker container:
+
 `docker run --name iknow -it iknow`
+
+strace needs docker seccomp turned off:
+
+`docker run --security-opt seccomp:unconfined --name iknow -it iknow`
+
+fanotify needs SYS_ADMIN privileged
+
+`docker run --privileged --cap-add SYS_ADMIN --name iknow -it iknow`
 
 ## Showcase
 

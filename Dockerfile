@@ -34,12 +34,26 @@ RUN apt-get -y --no-install-recommends install \
   vim
 
 WORKDIR /tmp/workspace/
-RUN wget http://man7.org/tlpi/code/download/tlpi-171205-dist.tar.gz && \
-    tar -xf tlpi-171205-dist.tar.gz && \
-    mv tlpi-dist tlpi && \
-    rm tlpi-171205-dist.tar.gz
 
-WORKDIR /tmp/workspace/tlpi
+# Use tlpi inotify demo without pid
+
+# RUN wget http://man7.org/tlpi/code/download/tlpi-171205-dist.tar.gz && \
+#    tar -xf tlpi-171205-dist.tar.gz && \
+#    mv tlpi-dist tlpi && \
+#    rm tlpi-171205-dist.tar.gz
+# WORKDIR /tmp/workspace/tlpi
+# RUN make
+# WORKDIR /tmp/workspace/demo
+# ENTRYPOINT touch pandora && /tmp/workspace/tlpi/inotify/demo_inotify /tmp/workspace/demo/pandora
+
+# Use fanotify demo with pid
+
+RUN wget https://github.com/NegativeMjark/fanotify/archive/master.zip && \
+    unzip master.zip && \
+    mv fanotify-master fanotify && \
+    rm master.zip
+
+WORKDIR /tmp/workspace/fanotify
 RUN make
 WORKDIR /tmp/workspace/demo
-ENTRYPOINT touch pandora && /tmp/workspace/tlpi/inotify/demo_inotify /tmp/workspace/demo/pandora
+ENTRYPOINT touch pandora && /tmp/workspace/fanotify/fanotify CLOSE "" /tmp/workspace/demo/pandora
